@@ -57,9 +57,9 @@ angular.module('Polygons')
         $scope.covering = true
         $timeout( ->
           $scope.questing = 'answer'
-        , 1000)
+        , 600)
       , 400)
-    , 1000)
+    , 600)
 
 
   _showPolygon = ->
@@ -92,10 +92,7 @@ angular.module('Polygons')
     return if String($scope.inputNumber).length >= 2
     inputString = ''
     if $scope.inputNumber is 0
-      if number is 0 or
-         number is 1 or
-         number is 2
-        return
+      return if number is 0
       $scope.inputNumber = ''
     $scope.inputNumber = Number(String($scope.inputNumber) + String(number))
 
@@ -114,6 +111,10 @@ angular.module('Polygons')
 .factory('randomPolygonView', (polygonView, randomPolygon) ->
   polygonView.initPolygon 'polygon'
   return {
+    ###*
+     * Set range of points by score
+     * @param {number} score Now score
+    ###
     setPointsNumRangeByScore: (num) ->
       minNum = 0
       maxNum = 0
@@ -122,30 +123,38 @@ angular.module('Polygons')
         maxNum = 6
       else if num < 10
         minNum = 3
-        maxNum = 8
+        maxNum = 7
       else if num < 20
         minNum = 5
-        maxNum = 10
+        maxNum = 9
       else if num < 30
         minNum = 5
-        maxNum = 15
+        maxNum = 11
       else
-        minNum = 5
-        maxNum = 20
+        minNum = 7
+        maxNum = 13
       randomPolygon.setPointsNumRange minNum, maxNum
 
+    ###*
+     * Show polygon
+     * @return {number} Number of points
+    ###
     showPolygon: ->
       polygonView.clearView()
       return polygonView.showPolygon(
         randomPolygon.getPoints()
         randomPolygon.getColor()
       )
+
+    ###*
+     * Show face of polygon
+     * @param  {boolean} type Face type
+    ###
     showPolygonFace: (type) ->
       polygonView.showPolygonFace(
         randomPolygon.getFacePoints()
         type
       )
-      return
 
   }
 )
@@ -157,8 +166,8 @@ angular.module('Polygons')
 
   ###*
    * Initialize canvas
-   * @param  {[type]} canvas [description]
-   * @return {[type]}        [description]
+   * @param  {string} canvas Canvas ID
+   * @return {object} self
   ###
   @initPolygon = (canvas) ->
     _canvas = document.getElementById canvas
@@ -170,7 +179,7 @@ angular.module('Polygons')
 
   ###*
    * Clear view
-   * @return {[type]} [description]
+   * @return {object} self
   ###
   @clearView = ->
     _context.clearRect 0, 0, 300, 400
@@ -178,9 +187,9 @@ angular.module('Polygons')
 
   ###*
    * Show polygon
-   * @param  {object} points     [description]
-   * @param  {string} color      [description]
-   * @return {number}            Number of points
+   * @param  {array.<object>} points     Points
+   * @param  {string}         color      Color
+   * @return {number}                    Number of points
   ###
   @showPolygon = (points, color) ->
     _context.strokeStyle = '#ffffff'
@@ -201,8 +210,9 @@ angular.module('Polygons')
 
   ###*
    * Show face of polygonFace
-   * @param  {object}  points     [description]
+   * @param  {object}  points     Points
    * @param  {boolean} type       Face type
+   * @return {object}             self
   ###
   @showPolygonFace = (points, type) ->
     _context.fillStyle = '#000000'
@@ -222,7 +232,7 @@ angular.module('Polygons')
       _context.arc points.mouthPoint.x, points.mouthPoint.y+20, 10, -Math.PI/3, -Math.PI/3*2, true  
     _context.stroke()
 
-    return
+    @
 
   return
 )
@@ -306,10 +316,19 @@ angular.module('Polygons')
     }
 
   return {
+    ###*
+     * Set range of points
+     * @param {number} min Min of points range
+     * @param {number} max Min of points range
+    ###
     setPointsNumRange: (min, max) ->
       _minNum = min
       _maxNum = max
 
+    ###*
+     * Get random points
+     * @return {array.<object>} Points
+    ###
     getPoints: ->
       num = _getNumber()
       baseAngle = _deg2rad(180 * (num - 2) / num)
@@ -340,10 +359,17 @@ angular.module('Polygons')
       _randomPoints = points
       return _randomPoints
 
+    ###*
+     * Get random color
+     * @return {string} Color
+    ###
     getColor: ->
       return _colors[_getRamdomByRange(0, _colors.length-1)]
 
-
+    ###*
+     * Get point of face
+     * @return {object} Points of face
+    ###
     getFacePoints: ->
       eyePoint1 = {}
       eyePoint2 = {}
