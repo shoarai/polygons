@@ -128,12 +128,15 @@ angular.module('Polygons')
       maxNum = 0
       if num < 2
         minNum = 3
-        maxNum = 6
+        maxNum = 5
       else if num < 10
         minNum = 3
+        maxNum = 6
+      else if num < 15
+        minNum = 5
         maxNum = 7
       else if num < 20
-        minNum = 5
+        minNum = 6
         maxNum = 9
       else if num < 30
         minNum = 5
