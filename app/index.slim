@@ -22,7 +22,8 @@ html
       ion-content ng-show="viewing==='main'"
         a.button.button-icon.icon.ion-information-circled ng-click="onclickInfo()"
         .center
-          h1#title Polygons
+          div#title ng-style="titleStyle"
+            h1 Polygons
           p#best-score ベストスコア：{{recode.bestscore}}
           button#start.button.button-large.button-positive ng-click="onclickStart()" Start
 
@@ -82,7 +83,7 @@ html
 
         .row
           .col
-            button.button.button-block.button-positive ng-disabled="inputNumber===0" ng-click="onclickOK()" OK
+            button.button.button-block.button-positive ng-disabled="inputNumber<3" ng-click="onclickOK()" OK
 
     <!-- build:js scripts/vendor.js -->
     <!-- <script src="vendor/someContribJs.js"></script> -->

@@ -66,6 +66,12 @@ angular.module('Polygons')
     $scope.inputNumber = 0
     $scope.pointsNum = randomPolygonView.showPolygon()
 
+  _setTitleStyle = ->
+    imageSuffix = Math.floor(Math.random() * (7 - 3 + 1)) + 3
+    $scope.titleStyle =  {
+      'background-image':'url("img/title-'+imageSuffix+'.png")'
+    } 
+  _setTitleStyle()
 
   $scope.onclickOK = ->
     $scope.questing = false
@@ -76,7 +82,6 @@ angular.module('Polygons')
     # If incorrect, show incorrect view
     if $scope.inputNumber is $scope.pointsNum
       $scope.now_score++
-      console.log $scope.now_score
       $scope.questing = 'correct'
       randomPolygonView.showPolygonFace true
     else
@@ -97,6 +102,7 @@ angular.module('Polygons')
     $scope.inputNumber = Number(String($scope.inputNumber) + String(number))
 
   $scope.onclickBack = ->
+    _setTitleStyle()
     $scope.viewing = 'main'
 
   $scope.onclickInfo = ->
@@ -105,6 +111,8 @@ angular.module('Polygons')
       template: 'text'
       okText: 'Close'
     }
+
+
 )
 
 
@@ -249,12 +257,12 @@ angular.module('Polygons')
   _minY = 0
   _angleMargin = 10
   _colors = [
-    '#4a87ee'
-    '#43cee6'
-    '#f0b840'
-    '#ef4e3a'
-    '#d39211'
-    '#8a6de9'
+    '#4a87ee' # #145fd7 positive
+    '#43cee6' # #1aacc3 calm
+    '#66cc33' # #498f24 balanced
+    '#f0b840' # #d39211 energized
+    '#ef4e3a' # #cc2311 assertive
+    '#8a6de9' # #552bdf royal
   ]
 
   _randomPoints = []
@@ -266,7 +274,7 @@ angular.module('Polygons')
     return _getRamdomByRange _minLen, _maxLen
 
   _getRamdomByRange = (min, max) ->
-    return Math.floor(Math.random() * (max - min - 1)) + min
+    return Math.floor(Math.random() * (max - min + 1)) + min
 
   _deg2rad = (deg) ->
     return deg / 180 * Math.PI
