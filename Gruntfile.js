@@ -65,6 +65,10 @@ module.exports = function (grunt) {
         files: ['<%= yeoman.app %>/**/*.html'],
         tasks: ['newer:copy:app']
       },
+      slim: {
+        files: ['<%= yeoman.app %>/*.slim'],
+        tasks: ['newer:slim:dist', 'newer:copy:tmp']
+      },
       coffee: {
         files: ['<%= yeoman.app %>/<%= yeoman.scripts %>/{,*/}*.{coffee,litcoffee,coffee.md}'],
         tasks: ['newer:coffee:dist', 'newer:copy:tmp']
@@ -164,6 +168,22 @@ module.exports = function (grunt) {
       sass: {
         src: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
         ignorePath: /(\.\.\/){1,2}lib\//
+      }
+    },
+
+    slim: {
+      dist: {
+        // files: {
+          // 'index.html': 'index.slim',
+        // }
+
+        files: [{
+          expand: true,
+          cwd: '<%= yeoman.app %>/',
+          src: ['{,*/}*.slim'],
+          dest: '.tmp/',
+          ext: '.html'
+        }]
       }
     },
 
@@ -341,6 +361,7 @@ module.exports = function (grunt) {
       },
       server: [
         'coffee:dist',
+        'slim:dist',
         'compass:server',
         'copy:styles',
         'copy:vendor',
@@ -355,6 +376,7 @@ module.exports = function (grunt) {
       ],
       dist: [
         'coffee',
+        'slim:dist',
         'compass:dist',
         'copy:styles',
         'copy:vendor',

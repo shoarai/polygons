@@ -1,0 +1,112 @@
+doctype html
+html
+  head
+    meta charset="utf-8"
+    meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width"
+    title Polygons
+
+    <!-- build:css styles/vendor.css -->
+    / <link rel="stylesheet" href="vendor/some.contrib.css">
+    <!-- bower:css -->
+    link rel="stylesheet" href="lib/ionic/release/css/ionic.css"
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:css({.tmp,app}) styles/main.css -->
+    link rel="stylesheet" href="styles/main.css"
+    <!-- endbuild -->
+
+  body ng-app="Polygons" admob=""
+
+    ion-pane ng-controller="MainCtrl"
+      ion-content ng-show="viewing==='main'"
+        a.button.button-icon.icon.ion-information-circled ng-click="onclickInfo()"
+        .center
+          h1#title Polygons
+          p#best-score ベストスコア：{{recode.bestscore}}
+          button#start.button.button-large.button-positive ng-click="onclickStart()" Start
+
+      ion-content ng-show="viewing==='question'"
+        .center
+          #canvas-cover ng-show="covering"
+
+          canvas#polygon max-canvas="" height="400px"
+
+          / <div id="correct-message" ng-show="questing==='correct'">ありがとう！</div>
+          / <div id="incorrect-message" ng-show="questing==='incorrect'">残念…</div>
+
+          #question2 ng-show="questing==='answer'"
+            p#input-message 何角形？
+            #input
+              p#input-number
+                | {{inputNumber}}
+              a#clear-number.button.button-icon.icon.ion-close-circled ng-click="onclickClear()"
+            
+          #answered ng-show="questing==='correct'"
+            .now-score スコア：{{now_score}}
+            div
+              button#next.button.button-clear.button-large.button-positive ng-click="onclickNext()" Next
+            
+          #answered2 ng-show="questing==='incorrect'"
+            .now-score スコア：{{now_score}}
+            .row
+              .col
+                button#back.button.button-clear.button-large.button-positive ng-click="onclickBack()" Title
+              .col
+                button#restart.button.button-clear.button-large.button-positive ng-click="onclickStart()" Start
+
+      #question ng-show="viewing==='question' && questing==='answer'"
+        .row
+          .col
+            button.button.button-clear.button-positive ng-click="onclickNumber(3)" 3
+          .col
+            button.button.button-clear.button-positive ng-click="onclickNumber(4)" 4
+          .col
+            button.button.button-clear.button-positive ng-click="onclickNumber(5)" 5
+          .col
+            button.button.button-clear.button-positive ng-click="onclickNumber(6)" 6
+          .col
+            button.button.button-clear.button-positive ng-click="onclickNumber(7)" 7
+
+        .row
+          .col
+            button.button.button-clear.button-positive ng-click="onclickNumber(8)" 8
+          .col
+            button.button.button-clear.button-positive ng-click="onclickNumber(9)" 9
+          .col
+            button.button.button-clear.button-positive ng-disabled="inputNumber===0" ng-click="onclickNumber(0)" 0
+          .col
+            button.button.button-clear.button-positive ng-click="onclickNumber(1)" 1
+          .col
+            button.button.button-clear.button-positive ng-click="onclickNumber(2)" 2
+
+        .row
+          .col
+            button.button.button-block.button-positive ng-disabled="inputNumber===0" ng-click="onclickOK()" OK
+
+    <!-- build:js scripts/vendor.js -->
+    <!-- <script src="vendor/someContribJs.js"></script> -->
+    <!-- bower:js -->
+    script src="lib/angular/angular.js"
+    script src="lib/angular-animate/angular-animate.js"
+    script src="lib/angular-sanitize/angular-sanitize.js"
+    script src="lib/angular-ui-router/release/angular-ui-router.js"
+    script src="lib/collide/collide.js"
+    script src="lib/ionic/release/js/ionic.js"
+    script src="lib/ionic/release/js/ionic-angular.js"
+    script src="lib/angular-cookies/angular-cookies.js"
+    script src="lib/angularLocalStorage/src/angularLocalStorage.js"
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- cordova script (this will be a 404 during development) -->
+    script src="cordova.js"
+
+
+    <!-- build:js scripts/scripts.js -->
+    script src="scripts/config.js"
+    script src="scripts/app.js"
+    script src="scripts/main.js"
+    script src="scripts/admob.js"
+    script src="scripts/debug.js"
+    <!-- endbuild -->

@@ -24,6 +24,7 @@
     "grunt-newer": "~0.6.1",
     "grunt-ng-annotate": "~0.2.3",
     "grunt-ng-constant": "^0.5.0",
+    "grunt-slim": "^0.1.0",
     "grunt-usemin": "~2.0.0",
     "grunt-wiredep": "^1.7.0",
     "ionic": "^1.2.7",
