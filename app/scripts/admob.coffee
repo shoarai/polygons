@@ -11,7 +11,7 @@ angular.module('Polygons')
         return if not admob?
         
         admob.initAdmob(
-          'ca-app-pub-5059946936929341/7104002516', # bannar ID
+          '', # bannar ID
           '') # interstitial ID
         admob.showBanner admob.BannerSize.BANNER, admob.Position.BOTTOM_CENTER
         return
